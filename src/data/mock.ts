@@ -1,0 +1,214 @@
+export function formatUZS(n: number): string {
+  return n.toLocaleString('uz-UZ')
+}
+
+export function formatK(n: number): string {
+  return (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K'
+}
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface WeatherDay {
+  day:  string
+  temp: number
+}
+
+export interface WeatherLocation {
+  name:      string
+  temp:      number
+  feels:     number
+  hi:        number
+  lo:        number
+  condition: string
+  icon:      'sun' | 'haze'
+  forecast:  WeatherDay[]
+}
+
+export interface WeatherData {
+  city: WeatherLocation
+  park: WeatherLocation
+}
+
+export interface NewsSlide {
+  id:       number
+  tag:      string
+  title:    string
+  subtitle: string
+  bg:       string
+  body:     string
+}
+
+export interface Attraction {
+  id:          number
+  name:        string
+  category:    string
+  emoji:       string
+  price:       number
+  wait:        number
+  rating:      number
+  bg:          string
+  description: string
+  height:      string
+  age:         string
+}
+
+export type PinType = 'attraction' | 'cafe' | 'shop' | 'toilet' | 'me'
+
+export interface MapPin {
+  id:    number
+  type:  PinType
+  emoji: string
+  name:  string
+  x:     number
+  y:     number
+}
+
+export interface HistoryItem {
+  id:           number
+  attractionId: number
+  name:         string
+  emoji:        string
+  price:        number
+  people:       number
+  method:       string
+  cashback:     number
+  date:         string
+  ts:           number
+}
+
+export interface Moment {
+  id:          number
+  author:      string
+  avatar:      string
+  time:        string
+  caption:     string
+  likes:       number
+  liked:       boolean
+  mediaEmoji:  string
+}
+
+// ─── Mock Data ────────────────────────────────────────────────────────────────
+
+export const weather: WeatherData = {
+  city: {
+    name:      'Toshkent',
+    temp:      34,
+    feels:     36,
+    hi:        37,
+    lo:        22,
+    condition: 'Partly cloudy',
+    icon:      'haze',
+    forecast: [
+      { day: 'DU', temp: 34 },
+      { day: 'SE', temp: 36 },
+      { day: 'CH', temp: 35 },
+      { day: 'PA', temp: 32 },
+      { day: 'JU', temp: 30 },
+    ],
+  },
+  park: {
+    name:      'Magic Park',
+    temp:      31,
+    feels:     33,
+    hi:        35,
+    lo:        21,
+    condition: 'Sunny, light breeze',
+    icon:      'sun',
+    forecast: [
+      { day: 'DU', temp: 31 },
+      { day: 'SE', temp: 33 },
+      { day: 'CH', temp: 32 },
+      { day: 'PA', temp: 30 },
+      { day: 'JU', temp: 28 },
+    ],
+  },
+}
+
+export const newsSlides: NewsSlide[] = [
+  {
+    id:       1,
+    tag:      'YANGILIK',
+    title:    'Yangi attraksion ochildi!',
+    subtitle: 'Mega rollercoaster — 120 km/h tezlik',
+    bg:       'linear-gradient(135deg, #03A1C4 0%, #0288A5 100%)',
+    body:     "Parkimizning eng yangi va eng tezkor attraksioni — \"Tornado\" — rasman ochildi! 120 km/h gacha tezlashuvchi bu zavq mashinasida har kuni 9:00–21:00 oralig'ida aylanishingiz mumkin. Chipta narxi 50 000 so'm. Siz uchun ajoyib taassurotlar kafolatlangan!",
+  },
+  {
+    id:       2,
+    tag:      'AKSIYA',
+    title:    'Bolalarga 50% chegirma',
+    subtitle: 'Har shanba va yakshanba kunlari',
+    bg:       'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+    body:     "Har hafta oxirida 12 yoshgacha bo'lgan barcha bolalar uchun barcha attraksionlarda 50% chegirma. Oilaviy dam olish uchun eng yaxshi imkoniyat! Chegirma avtomatik tarzda qo'llaniladi.",
+  },
+  {
+    id:       3,
+    tag:      'TADBIR',
+    title:    'Yozgi festival boshlanmoqda',
+    subtitle: '15-iyuldan 31-avgustgacha',
+    bg:       'linear-gradient(135deg, #F43F5E 0%, #BE123C 100%)',
+    body:     "2026 yilgi yozgi festival dasturi: har kuni jonli musiqa, ovqat yarmarkasi, sovg'ali musobaqalar. Festivalni o'tkazib yubormang — bolalar va kattalar uchun alohida dasturlar mavjud.",
+  },
+]
+
+export const attractions: Attraction[] = [
+  {
+    id: 1, name: 'Tornado', category: 'THRILL', emoji: '🎢', price: 50000, wait: 15, rating: 4.9,
+    bg: 'linear-gradient(145deg, #0F172A 0%, #1E3A5F 100%)',
+    description: "Park'dagi eng tezkor attraksion. 120 km/h gacha tezlashadi. Balandligi 45 metr. Davomiyligi 3 daqiqa.",
+    height: '120 sm+', age: '12+',
+  },
+  {
+    id: 2, name: 'Aqua Splash', category: 'WATER', emoji: '🌊', price: 35000, wait: 20, rating: 4.7,
+    bg: 'linear-gradient(145deg, #0369A1 0%, #0EA5E9 100%)',
+    description: "Suv uchun ajoyib attraksion. Butun oila uchun mos. Kiyimingiz ho'l bo'lishini unutmang!",
+    height: '90 sm+', age: '5+',
+  },
+  {
+    id: 3, name: 'Sky Tower', category: 'VIEW', emoji: '🗼', price: 25000, wait: 5, rating: 4.6,
+    bg: 'linear-gradient(145deg, #4C1D95 0%, #7C3AED 100%)',
+    description: "60 metr balandlikdagi kuzatuv minorasi. Butun park va shaharning panoramik manzarasi.",
+    height: "Cheklov yo'q", age: '3+',
+  },
+  {
+    id: 4, name: 'Carousel Dream', category: 'FAMILY', emoji: '🎠', price: 20000, wait: 3, rating: 4.8,
+    bg: 'linear-gradient(145deg, #BE185D 0%, #EC4899 100%)',
+    description: "Klassik karusel. Kichkintoylar uchun eng sevimli attraksion. Yorqin ranglar va musiqali sayohat.",
+    height: "Cheklov yo'q", age: '2+',
+  },
+  {
+    id: 5, name: 'Ghost House', category: 'SCARY', emoji: '👻', price: 40000, wait: 25, rating: 4.5,
+    bg: 'linear-gradient(145deg, #1C1917 0%, #44403C 100%)',
+    description: "Qo'rqinchli uy! Dadillarga taklif. Har burchakda ajablantiradigan siurprizlar.",
+    height: "Cheklov yo'q", age: '12+',
+  },
+]
+
+export const mapPins: MapPin[] = [
+  { id: 1,  type: 'attraction', emoji: '🎢',  name: 'Tornado',        x: 30, y: 25 },
+  { id: 2,  type: 'attraction', emoji: '🌊',  name: 'Aqua Splash',    x: 65, y: 40 },
+  { id: 3,  type: 'attraction', emoji: '🗼',  name: 'Sky Tower',       x: 50, y: 55 },
+  { id: 4,  type: 'attraction', emoji: '🎠',  name: 'Carousel Dream',  x: 20, y: 60 },
+  { id: 5,  type: 'attraction', emoji: '👻',  name: 'Ghost House',     x: 75, y: 65 },
+  { id: 6,  type: 'cafe',       emoji: '☕',  name: 'Park Cafe',       x: 40, y: 75 },
+  { id: 7,  type: 'cafe',       emoji: '🍦',  name: 'Ice Cream',       x: 60, y: 20 },
+  { id: 8,  type: 'shop',       emoji: '🛍️', name: 'Souvenir Shop',   x: 80, y: 30 },
+  { id: 9,  type: 'toilet',     emoji: '🚻',  name: 'WC',              x: 15, y: 40 },
+  { id: 10, type: 'me',         emoji: '📍',  name: 'Siz bu yerdasiz', x: 45, y: 45 },
+]
+
+export const historyItems: HistoryItem[] = [
+  { id: 1, attractionId: 1, name: 'Tornado',        emoji: '🎢', price: 50000, people: 2, method: 'Click', cashback: 5000, date: '2026-06-05', ts: 1749081600 },
+  { id: 2, attractionId: 2, name: 'Aqua Splash',    emoji: '🌊', price: 35000, people: 3, method: 'Payme', cashback: 5250, date: '2026-06-05', ts: 1749074400 },
+  { id: 3, attractionId: 4, name: 'Carousel Dream', emoji: '🎠', price: 20000, people: 1, method: 'Uzum',  cashback: 1000, date: '2026-06-05', ts: 1749067200 },
+  { id: 4, attractionId: 3, name: 'Sky Tower',       emoji: '🗼', price: 25000, people: 4, method: 'Click', cashback: 5000, date: '2026-06-04', ts: 1748995200 },
+  { id: 5, attractionId: 5, name: 'Ghost House',     emoji: '👻', price: 40000, people: 2, method: 'Payme', cashback: 4000, date: '2026-06-04', ts: 1748988000 },
+]
+
+export const moments: Moment[] = [
+  { id: 1, author: 'Dilnoza T.', avatar: 'DT', time: '2 soat',  caption: "Tornado attraksioni ajoyib edi! Hayotimda ko'rgan eng zo'r narsa 🎢❤️",    likes: 142, liked: false, mediaEmoji: '🎢' },
+  { id: 2, author: 'Bobur M.',   avatar: 'BM', time: '4 soat',  caption: 'Butun oila bilan ajoyib dam oldik. Bolalar juda xursand ☀️🎠',              likes: 98,  liked: false, mediaEmoji: '🎠' },
+  { id: 3, author: 'Sarvinoz K.',avatar: 'SK', time: '6 soat',  caption: "Sky Tower dan ko'rinish — so'zlar bilan aytib bo'lmaydi! 🗼✨",              likes: 87,  liked: false, mediaEmoji: '🗼' },
+  { id: 4, author: 'Jasur R.',   avatar: 'JR', time: '1 kun',   caption: 'Aqua Splash — yozgi issiqda eng yaxshi tanlov! 🌊💦',                        likes: 76,  liked: false, mediaEmoji: '🌊' },
+  { id: 5, author: 'Malika U.',  avatar: 'MU', time: '1 kun',   caption: "Ghost House dan chiqqanymda oyog'im qaltirab turdi 😂👻",                    likes: 65,  liked: false, mediaEmoji: '👻' },
+]
